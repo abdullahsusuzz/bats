@@ -150,7 +150,7 @@ student_is_unique () {
 
 # PROGRAM
 
-main () {
+
 [[ -f $CSV_FILE ]] || die $(error 1)
 [[ $(student_list | student_is_unique) ]] && die $(error 2)
 (( $# > 1 )) && die $(error 4)
@@ -178,4 +178,4 @@ case $1 in
     die $(error 5 $1)
     ;;
 esac
-}
+

@@ -1,40 +1,46 @@
 #!/usr/bin/env bats
 
-CSV_FILE=cat"okul.csv"
-CSV_FILE_ALL=cat"schoolAll.csv"
-CSV_FILE_BOY=cat"schoolBoy.csv"
-CSV_FILE_GIRL=cat"schoolGirl.csv"
-CSV_FILE_ONE=cat"schoolOne.csv"
-CSV_FILE_TWO=cat"schoolTwo.csv"
-CSV_FILE_THREE=cat"schoolThree.csv"
-CSV_FILE_FOUR=cat"schoolFour.csv"
+CSV_FILE="cat okul.csv"
+CSV_FILE_ALL=$( cat schoolAll.csv)
+CSV_FILE_BOY='cat schoolBoy.csv '
+CSV_FILE_GIRL=$( cat schoolGirl.csv )
+CSV_FILE_ONE=$( cat schoolOne.csv )
+CSV_FILE_TWO=$( cat schoolTwo.csv )
+CSV_FILE_THREE=$( cat schoolThree.csv )
+CSV_FILE_FOUR=$( cat schoolFour.csv )
 
 @test "school_all" {
-  run ./okul.sh
-  [ "$output"=='CSV_FILE_ALL' ]
+  run ./okul.sh 
+  [ "$status" -eq 0 ]
+  [ "$output"=='$CSV_FILE_ALL' ]
 }
 @test "school_boy" {
-  $CSV_FILE | run ./okul.sh e
+  run ./okul.sh k 
+  [ "$status" -eq 0 ]
   [ "$output"=='$CSV_FILE_BOY' ]
 }
 @test "school_girl" {
-  $CSV_FILE | run ./okul.sh k
+  run ./okul.sh k
+  [ "$status" -eq 0 ]
   [ "$output"=="$CSV_FILE_GIRL" ]
 }
 @test "school_grade_one" {
-  $CSV_FILE | run ./okul.sh 1
+  run ./okul.sh 1
+  [ "$status" -eq 0 ]
   [ "$output"=="$CSV_FILE_ONE" ]
 }
 @test "school_grade_two" {
-  $CSV_FILE | run ./okul.sh 2
+  run ./okul.sh 1
+  [ "$status" -eq 0 ]
   [ "$output"=="$CSV_FILE_TWO" ]
 }
 @test "school_grade_three" {
-  $CSV_FILE | run ./okul.sh 3
+  run ./okul.sh 3
+  [ "$status" -eq 0 ]
   [ "$output"=="$CSV_FILE_THREE" ]
 }
 @test "school_grade_four" {
-  $CSV_FILE | run ./okul.sh 4
+  run ./okul.sh 4
   [ "$output"=="$CSV_FILE_FOUR" ]
 }
 @test "error_one" {
@@ -73,8 +79,15 @@ CSV_FILE_FOUR=cat"schoolFour.csv"
   run ./okul.sh student_print_format all
   [ "$output"=='$grade $name $surname $gender' ]
 }
-@test "main" {
-  run ./okul.sh main
-  [ "$status" -eq 0 ]
+@test "dogru cinsiyet girilmediginde hata veriyor mu" {
+  run ./okul.sh r 
+  [ "$status" -ne 0 ]
 }
-
+@test "dogru sınıf girilmediginde hata veriyor mu" {
+  run ./okul.sh 6
+  [ "$status" -ne 0 ]
+}
+@test "birden fazla arguman girilince hata veriyormu" {
+  run ./okul.sh k 1
+  [ "$status" -ne 0 ]
+}
