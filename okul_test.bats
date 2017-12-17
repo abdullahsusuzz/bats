@@ -1,8 +1,8 @@
-#!/usr/bin/env bats
+﻿#!/usr/bin/env bats
 
-CSV_FILE="cat okul.csv"
+CSV_FILE=$( cat okul.csv)
 CSV_FILE_ALL=$( cat schoolAll.csv)
-CSV_FILE_BOY='cat schoolBoy.csv '
+CSV_FILE_BOY=$( cat schoolBoy.csv) 
 CSV_FILE_GIRL=$( cat schoolGirl.csv )
 CSV_FILE_ONE=$( cat schoolOne.csv )
 CSV_FILE_TWO=$( cat schoolTwo.csv )
