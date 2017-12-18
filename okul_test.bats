@@ -1,8 +1,8 @@
-﻿#!/usr/bin/env bats
+#!/usr/bin/env bats
 
-CSV_FILE=$( cat okul.csv)
-CSV_FILE_ALL=$( cat schoolAll.csv)
-CSV_FILE_BOY=$( cat schoolBoy.csv) 
+CSV_FILE=$(<okul.csv )
+CSV_FILE_ALL=$(<schoolAll.csv )
+CSV_FILE_BOY=$(<schoolBoy.csv )
 CSV_FILE_GIRL=$( cat schoolGirl.csv )
 CSV_FILE_ONE=$( cat schoolOne.csv )
 CSV_FILE_TWO=$( cat schoolTwo.csv )
@@ -10,14 +10,12 @@ CSV_FILE_THREE=$( cat schoolThree.csv )
 CSV_FILE_FOUR=$( cat schoolFour.csv )
 
 @test "school_all" {
-  run ./okul.sh 
+  run ./okul.sh $(< cat schoolAll.csv )
   [ "$status" -eq 0 ]
-  [ "$output"=='$CSV_FILE_ALL' ]
 }
 @test "school_boy" {
-  run ./okul.sh k 
+  run ./okul.sh k $(< cat schoolBoy.csv )
   [ "$status" -eq 0 ]
-  [ "$output"=='$CSV_FILE_BOY' ]
 }
 @test "school_girl" {
   run ./okul.sh k
@@ -44,7 +42,7 @@ CSV_FILE_FOUR=$( cat schoolFour.csv )
   [ "$output"=="$CSV_FILE_FOUR" ]
 }
 @test "error_one" {
-  run ./okul.sh error 1
+  run ./okul.sh error 2
   [ "$output"=='$Hata: $CSV_FILE dosyası bulunamadı' ]
 }
 @test "error_two" {
@@ -81,13 +79,21 @@ CSV_FILE_FOUR=$( cat schoolFour.csv )
 }
 @test "dogru cinsiyet girilmediginde hata veriyor mu" {
   run ./okul.sh r 
-  [ "$status" -ne 0 ]
+  [ "$status" -eq 1 ]
 }
 @test "dogru sınıf girilmediginde hata veriyor mu" {
   run ./okul.sh 6
-  [ "$status" -ne 0 ]
+  [ "$status" -eq 1 ]
 }
 @test "birden fazla arguman girilince hata veriyormu" {
   run ./okul.sh k 1
-  [ "$status" -ne 0 ]
+  [ "$status" -eq 1 ]
+}
+@test "dogru cinsiyet girildiginde calısıyor mu" {
+  run ./okul.sh k
+  [ "$status" -eq 0 ]
+}
+@test "dogru sınıf girildiginde calısıyor mu" {
+  run ./okul.sh 1
+  [ "$status" -eq 0 ]
 }
